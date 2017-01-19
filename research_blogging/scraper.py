@@ -6,6 +6,7 @@ from readability.readability import Document
 
 import os
 import csv
+import httplib
 
 try:
     from urllib.request import urlopen, Request
@@ -93,7 +94,10 @@ class ResearchBloggingScraper:
             request = Request(url, None, self.headers)
 
             with urlopen(request) as res:
-                html = res.read()
+                try:
+                    html = res.read()
+                except httplib.IncompleteRead as e:
+                    html = e.partial
 
             readable_article = Document(html).summary()
             readable_soup = BeautifulSoup(readable_article, "lxml")
