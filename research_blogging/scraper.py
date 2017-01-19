@@ -94,10 +94,14 @@ class ResearchBloggingScraper:
             request = Request(url, None, self.headers)
 
             with urlopen(request) as res:
-                try:
-                    html = res.read()
-                except IncompleteRead as e:
-                    html = e.partial
+                attempt = 0
+                while attempt < 3:
+                    try:
+                        html = res.read()
+                    except IncompleteRead as e:
+                        attempt += 1
+                    else:
+                        break
 
             readable_article = Document(html).summary()
             readable_soup = BeautifulSoup(readable_article, "lxml")
