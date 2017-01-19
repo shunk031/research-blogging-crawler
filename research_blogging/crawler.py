@@ -40,8 +40,11 @@ class ResearchBloggingCrawler:
         self.before_url = url
         soup = self._make_soup(self.target_url)
         ul_pageBrowser = soup.find("ul", {"class": "pageBrowser"})
-        a_nexts = ul_pageBrowser.find_all("a", {"class": "underlined"})
-        a_next = a_nexts[1]
+        try:
+            a_nexts = ul_pageBrowser.find_all("a", {"class": "underlined"})
+            a_next = a_nexts[1]
+        except:
+            a_next = ul_pageBrowser.find("a", {"class": "underlined"})
 
         if a_next is not None and "href" in a_next.attrs:
             next_page_url = a_next["href"]
