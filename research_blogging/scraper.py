@@ -6,7 +6,6 @@ from readability.readability import Document
 
 import os
 import csv
-import httplib
 
 try:
     from urllib.request import urlopen, Request
@@ -97,7 +96,7 @@ class ResearchBloggingScraper:
             with urlopen(request) as res:
                 try:
                     html = res.read()
-                except httplib.IncompleteRead as e:
+                except IncompleteRead as e:
                     html = e.partial
 
             readable_article = Document(html).summary()
