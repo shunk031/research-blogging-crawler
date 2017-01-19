@@ -100,7 +100,7 @@ class ResearchBloggingScraper:
             article_dict["article"] = readable_soup.get_text()
 
         except HTTPError as e:
-            print(e)
+            print("{:9}".format("", e))
             article_dict["article"] = None
 
         return article_dict

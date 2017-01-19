@@ -67,6 +67,6 @@ class ResearchBloggingCrawler:
             time.sleep(2)
 
             end = time.time()
-            print("[ DEBUG ] Elapsed time: {:.3f} [min]".format((end - start) / 60))
+            print("[ DEBUG ] Elapsed time: {:.2f} [min]".format((end - start) / 60))
 
         return self.FINISH_CRAWL
