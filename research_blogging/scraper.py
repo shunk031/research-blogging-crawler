@@ -11,12 +11,13 @@ import httplib
 try:
     from urllib.request import urlopen, Request
     from urllib.parse import urljoin, urlencode
-
     from urllib.error import HTTPError
+    from http.client import IncompleteRead
 except ImportError:
     from urllib2 import urlopen
     from urllib2 import urljoin
     from urllib2 import HTTPError
+    from httplib import IncompleteRead
 
 
 class ResearchBloggingScraper:
