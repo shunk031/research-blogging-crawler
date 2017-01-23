@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
     except Exception as e:
 
-        slacker_config = os.path.join()
+        slacker_config = os.path.join(HOME_DIR, ".slacker_config")
         with open(slacker_config, "r") as rf:
             config = json.load(rf)
 
