@@ -107,7 +107,7 @@ class ResearchBloggingScraper:
             readable_soup = BeautifulSoup(readable_article, "lxml")
             article_dict["article"] = readable_soup.get_text()
 
-        except HTTPError as e:
+        except Exception as e:
             print("{:9}".format("", e))
             article_dict["article"] = None
 
