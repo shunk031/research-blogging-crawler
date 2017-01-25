@@ -38,7 +38,7 @@ class ResearchBloggingCrawler:
                 return BeautifulSoup(html, "lxml")
 
             except HTTPError as err:
-                print("[ Exception ] in {}#make_soup: {}".format(self.__class__.__name__, err))
+                print("[ EXCEPTION ] in {}#make_soup: {}".format(self.__class__.__name__, err))
 
                 retries += 1
                 if retries >= max_retries:
@@ -63,7 +63,7 @@ class ResearchBloggingCrawler:
             next_page_url = a_next["href"]
 
             if self.before_url != next_page_url:
-                print("[ DEBUG ] Next article list page: {}".format(url))
+                print("[ PROCESS ] Next article list page: {}".format(url))
                 return next_page_url
 
         return None
@@ -73,7 +73,7 @@ class ResearchBloggingCrawler:
         try:
             while True:
                 start = time.time()
-                print("[ DEBUG ] Now page {} PROCESSING".format(self.page_count))
+                print("[ PROCESS ] Now page {} PROCESSING".format(self.page_count))
                 scraper = ResearchBloggingScraper(self.target_url, self.save_dir)
                 scraper.scrap()
                 self.target_url = self.get_next_page_link(self.target_url)
@@ -89,12 +89,12 @@ class ResearchBloggingCrawler:
                 elapsed_min = elapsed_sec / 60
 
                 if elapsed_min < 1:
-                    print("[ DEBUG ] Elapsed time: {:.2f} [sec]".format(elapsed_sec))
+                    print("[ TIME ] Elapsed time: {:.2f} [sec]".format(elapsed_sec))
                 else:
-                    print("[ DEBUG ] Elapsed time: {:.2f} [min]".format(elapsed_min))
+                    print("[ TIME ] Elapsed time: {:.2f} [min]".format(elapsed_min))
 
         except Exception as err:
-            print("[ Exception ] Exception occured: {}".format(err))
+            print("[ EXCEPTION ] Exception occured: {}".format(err))
             traceback.print_tb(err.__traceback__)
 
             self.save_status()
