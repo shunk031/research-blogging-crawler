@@ -30,14 +30,26 @@ class ResearchBloggingScraper:
         self.save_dir = save_dir
 
     def _make_soup(self, url):
-        try:
-            with urlopen(url) as response:
-                html = response.read()
 
-            return BeautifulSoup(html, "lxml")
-        except HTTPError as e:
-            print("[ DEBUG ] in {}#make_soup: {}".format(self.__class__.__name__, e))
-            return None
+        max_retries = 3
+        retries = 0
+
+        while True:
+            try:
+                with urlopen(url) as res:
+                    html = res.read()
+                return BeautifulSoup(html, "lxml")
+
+            except HTTPError as err:
+                print("[ EXCEPTION ] in {}#make_soup: {}".format(self.__class__.__name__, err))
+
+                retries += 1
+                if retries >= max_retries:
+                    raise Exception("Too many retries.")
+
+                wait = 2 ** (retries - 1)
+                print("[ RETRY ] Waiting {} seconds...".format(wai))
+                time.sleep(wait)
 
     def scrap(self):
 
