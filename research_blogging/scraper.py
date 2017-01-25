@@ -81,7 +81,7 @@ class ResearchBloggingScraper:
             detail_url = div_main_article.find("h1").find("a")
             abs_url = detail_url["href"]
             url = urljoin(self.base_url, abs_url)
-            print("[ DEBUG ] Get URL: {}".format(url))
+            print("[ GET ] Get URL: {}".format(url))
 
             # ページ構成の都合上、ここでタイトルを取得する。
             title = detail_url.get_text().strip()
@@ -99,7 +99,7 @@ class ResearchBloggingScraper:
         url = article_url[0]
         article_dict["url"] = url
 
-        print("[ DEBUG ] Title: {}".format(title))
+        print("[ GET ] Title: {}".format(title))
         article_dict["title"] = title
 
         try:
@@ -147,4 +147,6 @@ class ResearchBloggingScraper:
         filename = filename.replace("/", "")
         filename = filename.replace("?", "")
 
+        if len(filename) > 250:
+            filename = filename[:250]
         return filename
