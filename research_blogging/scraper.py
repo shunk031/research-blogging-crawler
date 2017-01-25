@@ -94,7 +94,7 @@ class ResearchBloggingScraper:
     def get_article_detail_info_dict(self, article_url):
 
         article_dict = {}
-        title = article_url[1]
+        title = article_url[1].strip()
 
         url = article_url[0]
         article_dict["url"] = url
