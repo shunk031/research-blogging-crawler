@@ -6,6 +6,7 @@ from readability.readability import Document
 
 import os
 import csv
+import traceback
 
 try:
     from urllib.request import urlopen, Request
@@ -119,8 +120,8 @@ class ResearchBloggingScraper:
             readable_soup = BeautifulSoup(readable_article, "lxml")
             article_dict["article"] = readable_soup.get_text()
 
-        except Exception as e:
-            print("{:9}".format("", e))
+        except Exception as err:
+            traceback.print_tb(err.__traceback__)
             article_dict["article"] = None
 
         return article_dict
