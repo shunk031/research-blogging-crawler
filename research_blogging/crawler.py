@@ -45,7 +45,7 @@ class ResearchBloggingCrawler:
                     raise Exception("Too many retries.")
 
                 wait = 2 ** (retries - 1)
-                print("[ RETRY ] Waiting {} seconds...".format(wai))
+                print("[ RETRY ] Waiting {} seconds...".format(wait))
                 time.sleep(wait)
 
     def get_next_page_link(self, url):
