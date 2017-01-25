@@ -5,6 +5,7 @@ from research_blogging.scraper import ResearchBloggingScraper
 from bs4 import BeautifulSoup
 
 import time
+import traceback
 import json
 
 try:
@@ -37,7 +38,7 @@ class ResearchBloggingCrawler:
                 return BeautifulSoup(html, "lxml")
 
             except HTTPError as err:
-                print("[ DEBUG ] in {}#make_soup: {}".format(self.__class__.__name__, err))
+                print("[ Exception ] in {}#make_soup: {}".format(self.__class__.__name__, err))
 
                 retries += 1
                 if retries >= max_retries:
@@ -92,13 +93,21 @@ class ResearchBloggingCrawler:
                 else:
                     print("[ DEBUG ] Elapsed time: {:.2f} [min]".format(elapsed_min))
 
-        except Exception:
+        except Exception as err:
+            print("[ Exception ] Exception occured: {}".format(err))
+            traceback.print_tb(err.__traceback__)
 
-            status_dict = {}
-            status_dict["target_url"] = self.target_url
-            status_dict["page_count"] = self.page_count
-
-            with open("status.json", "w") as wf:
-                json.dump(status_dict, wf, indent=2)
+            self.save_status()
 
         return self.FINISH_CRAWL
+
+    def save_status(self):
+
+        status_dict = {}
+        status_dict["target_url"] = self.target_url
+        status_dict["page_count"] = self.page_count
+
+        with open("status.json", "w") as wf:
+            json.dump(status_dict, wf, indent=2)
+
+        print("[ DUMP ] Dump status.json")
