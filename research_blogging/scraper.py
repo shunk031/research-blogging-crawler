@@ -6,11 +6,12 @@ from readability.readability import Document
 
 import os
 import csv
+import time
 import traceback
 
 try:
     from urllib.request import urlopen, Request
-    from urllib.parse import urljoin, urlencode
+    from urllib.parse import urljoin
     from urllib.error import HTTPError
     from http.client import IncompleteRead
 except ImportError:
